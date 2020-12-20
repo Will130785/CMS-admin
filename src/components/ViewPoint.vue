@@ -1,8 +1,7 @@
 <template>
-    <div class="events">
-        <div>
+    <div>
         <b-jumbotron>
-        <template #header>Events</template>
+        <template #header>{{title}}</template>
 
         <template #lead>
             This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
@@ -17,31 +16,33 @@
         </p>
 
         <div>
-  <b-button v-b-modal.modal-1>Add Event</b-button>
+  <b-button v-b-modal.modal-1>Add {{record}}</b-button>
 
   <b-modal id="modal-1" title="BootstrapVue">
     <p class="my-4">Hello from modal!</p>
-    <EventModal />
+    <Modal />
   </b-modal>
 </div>
     </b-jumbotron>
     </div>
-    </div>
 </template>
 
 <script>
-    import EventModal from "../components/modals/EventModal"
+    // import EventModal from "./modals/EventModal"
+    import modal from "./index"
     export default {
         components: {
-            EventModal
+            Modal: modal.page
+            
+        },
+        props: {
+            title: String,
+            record: String,
+            page: String
         }
     }
 </script>
 
-<style scoped lang="scss">
-    .events {
-        width: 100%;
-        height: 50rem;
-        background-color: #fff;
-    }
+<style scoped>
+
 </style>
