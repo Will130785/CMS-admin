@@ -2,11 +2,16 @@
     <div class="profile">
         <div>
         <b-jumbotron>
-        <template #header>Profile</template>
+        <template #header>Profiles</template>
 
         <template #lead>
-            This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-            featured content or information.
+            <div class="profile-container">
+                <div v-for="(profile, index) in profiles" :key="index" class="profile-entry">
+                    <p>{{profile.name}}</p>
+                    <p>{{profile.photo}}</p>
+                    <button v-on:click="onDelete($event, profile._id)" type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
         </template>
 
         <hr class="my-4">
@@ -30,11 +35,38 @@
 </template>
 
 <script>
-    import ProfileModal from "../components/modals/ProfileModal"
+import ProfileModal from "../components/modals/ProfileModal"
+import ProfileService from "../services/ProfileService"
     export default {
+        data(){
+            return {
+                profiles: []
+            }
+        },
         components: {
             ProfileModal
-        }
+        },
+        created(){
+            ProfileService.getProfiles()
+            .then(response => {
+                console.log(this.profiles)
+                this.profiles = response.data
+            })
+            .catch(error => {
+                console.log(`There was an error: ${error.response}`)
+            })
+        },
+        methods: {
+            onDelete(event, id){
+                ProfileService.deleteProfile(id)
+                .then(response => {
+                    console.log(id, response)
+                })
+                .catch(error => {
+                    console.log(error.response)
+                })
+            }
+        }    
     }
 </script>
 
@@ -43,5 +75,16 @@
         width: 100%;
         height: 50rem;
         background-color: #fff;
+    }
+
+    .profile-container {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .profile-entry {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
     }
 </style>

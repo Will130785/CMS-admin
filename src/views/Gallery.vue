@@ -5,8 +5,13 @@
         <template #header>Gallery</template>
 
         <template #lead>
-            This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-            featured content or information.
+            <div class="gallery-container">
+                <div v-for="(photo, index) in photos" :key="index" class="gallery-entry">
+                    <p>{{photo.image}}</p>
+                    <p>{{photo.description}}</p>
+                    <button v-on:click="onDelete($event, photo._id)" type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
         </template>
 
         <hr class="my-4">
@@ -31,10 +36,37 @@
 
 <script>
 import GalleryModal from "../components/modals/GalleryModal"
+import GalleryService from "../services/GalleryService"
     export default {
+        data(){
+            return {
+                photos: []
+            }
+        },
         components: {
             GalleryModal
-        }
+        },
+        created(){
+            GalleryService.getPhotos()
+            .then(response => {
+                console.log(this.photos)
+                this.photos = response.data
+            })
+            .catch(error => {
+                console.log(`There was an error: ${error.response}`)
+            })
+        },
+        methods: {
+            onDelete(event, id){
+                GalleryService.deletePhoto(id)
+                .then(response => {
+                    console.log(id, response)
+                })
+                .catch(error => {
+                    console.log(error.response)
+                })
+            }
+        }    
     }
 </script>
 
@@ -43,5 +75,16 @@ import GalleryModal from "../components/modals/GalleryModal"
         width: 100%;
         height: 50rem;
         background-color: #fff;
+    }
+
+    .gallery-container {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-entry {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
     }
 </style>

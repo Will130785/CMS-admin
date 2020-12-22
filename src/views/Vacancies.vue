@@ -1,12 +1,17 @@
 <template>
-    <div class="vacancies">
-       <div>
+    <div class="vacancy">
+        <div>
         <b-jumbotron>
-        <template #header>Vacancies</template>
+        <template #header>Job Vacancies</template>
 
         <template #lead>
-            This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-            featured content or information.
+            <div class="vacancy-container">
+                <div v-for="(vacancy, index) in vacancies" :key="index" class="vacancy-entry">
+                    <p>{{vacancy.title}}</p>
+                    <p>{{vacancy.contact}}</p>
+                    <button v-on:click="onDelete($event, vacancy._id)" type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
         </template>
 
         <hr class="my-4">
@@ -17,7 +22,7 @@
         </p>
 
         <div>
-  <b-button v-b-modal.modal-1>Add Vacancy</b-button>
+  <b-button v-b-modal.modal-1>Add Profile</b-button>
 
   <b-modal id="modal-1" title="BootstrapVue">
     <p class="my-4">Hello from modal!</p>
@@ -30,18 +35,56 @@
 </template>
 
 <script>
-    import VacancyModal from "../components/modals/VacancyModal"
+import VacancyModal from "../components/modals/VacancyModal"
+import VacancyService from "../services/VacancyService"
     export default {
+        data(){
+            return {
+                vacancies: []
+            }
+        },
         components: {
             VacancyModal
-        }
+        },
+        created(){
+            VacancyService.getVacancies()
+            .then(response => {
+                console.log(this.vacancies)
+                this.vacancies = response.data
+            })
+            .catch(error => {
+                console.log(`There was an error: ${error.response}`)
+            })
+        },
+        methods: {
+            onDelete(event, id){
+                VacancyService.deleteVacancy(id)
+                .then(response => {
+                    console.log(id, response)
+                })
+                .catch(error => {
+                    console.log(error.response)
+                })
+            }
+        }    
     }
 </script>
 
 <style scoped lang="scss">
-    .vacancies {
+    .vacancy {
         width: 100%;
         height: 50rem;
         background-color: #fff;
+    }
+
+    .vacancy-container {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .vacancy-entry {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
     }
 </style>

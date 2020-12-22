@@ -27,23 +27,28 @@
 </template>
 
 <script>
+import GalleryService from "../../services/GalleryService"
   export default {
     data() {
       return {
         form: {
-          email: '',
-          name: '',
-          food: null,
-          checked: []
+          image: '',
+          description: ''
         },
-        foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
         show: true
       }
     },
     methods: {
-      onSubmit(event) {
-        event.preventDefault()
-        alert(JSON.stringify(this.form))
+      onSubmit() {
+        const data = this.form;
+        console.log(data)
+        GalleryService.setPhoto(data)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error.response)
+        }) 
       },
       onReset(event) {
         event.preventDefault()

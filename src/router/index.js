@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import Login from "../views/Login";
 import Profile from "../views/Profile";
 import Events from "../views/Events";
 import Gallery from "../views/Gallery";
@@ -14,8 +15,8 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Profile",
-    component: Profile
+    name: "Login",
+    component: Login
   },
   {
     path:"/profile",

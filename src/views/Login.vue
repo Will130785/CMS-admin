@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+  <div class="login">
+    <b-form class="login-form" @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group
         id="username"
         label="Username:"
@@ -19,47 +19,39 @@
         <b-form-input
           id="password"
           v-model="form.password"
+          type="password"
           placeholder="Enter password"
           required
         ></b-form-input>
       </b-form-group>
 
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
+      <b-button type="submit" variant="primary">Login</b-button>
+      <b-button type="reset" variant="danger">Clear</b-button>
     </b-form>
   </div>
 </template>
 
 <script>
-import UserService from "../../services/UserService"
   export default {
     data() {
       return {
         form: {
-          username: "",
-          password: ""
+          username: '',
+          password: ''
         },
         show: true
       }
     },
     methods: {
-      onSubmit() {
-        const data = this.form;
-        console.log(data)
-        UserService.setUser(data)
-        .then(response => {
-          console.log(response)
-        })
-        .catch(error => {
-          console.log(error.response)
-        }) 
+      onSubmit(event) {
+        event.preventDefault()
+        alert(JSON.stringify(this.form))
       },
       onReset(event) {
         event.preventDefault()
         // Reset our form values
-        this.form.uesrname = ''
+        this.form.username = ''
         this.form.password = ''
-        this.form.checked = []
         // Trick to reset/clear native browser form validation state
         this.show = false
         this.$nextTick(() => {
@@ -69,3 +61,16 @@ import UserService from "../../services/UserService"
     }
   }
 </script>
+
+<style scoped lang="scss">
+    .login {
+        width: 100% !important;
+        display: flex;
+        justify-content: center;
+    }
+
+    .login-form {
+        width: 25%;
+    }
+    
+</style>

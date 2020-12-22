@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import MenuService from "../../services/MenuService"
   export default {
     data() {
       return {
@@ -39,22 +40,26 @@
           name: '',
           menu: null
         },
-        foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
         show: true
       }
     },
     methods: {
-      onSubmit(event) {
-        event.preventDefault()
-        alert(JSON.stringify(this.form))
+      onSubmit() {
+        const data = this.form;
+        console.log(data)
+        MenuService.setMenu(data)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error.response)
+        }) 
       },
       onReset(event) {
         event.preventDefault()
         // Reset our form values
-        this.form.email = ''
         this.form.name = ''
-        this.form.food = null
-        this.form.checked = []
+        this.form.menu = ""
         // Trick to reset/clear native browser form validation state
         this.show = false
         this.$nextTick(() => {

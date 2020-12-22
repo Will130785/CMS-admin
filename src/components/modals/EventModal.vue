@@ -27,7 +27,7 @@
       <b-form-group id="time" label="Time of Event:" label-for="time">
         <b-form-input
           id="time"
-          v-model="form.tine"
+          v-model="form.time"
           placeholder="Enter event time"
           required
         ></b-form-input>
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import EventService from "../../services/EventService"
   export default {
     data() {
       return {
@@ -68,17 +69,23 @@
           image: "",
           description: ""
         },
-        foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
         show: true
       }
     },
     methods: {
-      onSubmit(event) {
-        event.preventDefault()
-        alert(JSON.stringify(this.form))
+      onSubmit() {
+        const data = this.form;
+        console.log(data)
+        EventService.setEvent(data)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error.response)
+        }) 
       },
-      onReset(event) {
-        event.preventDefault()
+      onReset() {
+        // event.preventDefault()
         // Reset our form values
         this.form.email = ''
         this.form.name = ''

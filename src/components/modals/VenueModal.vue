@@ -18,7 +18,7 @@
       <b-form-group id="sub" label="Sub Heading:" label-for="sub">
         <b-form-input
           id="sub"
-          v-model="form.sub"
+          v-model="form.subHeading"
           placeholder="Enter sub heading"
           required
         ></b-form-input>
@@ -40,30 +40,36 @@
 </template>
 
 <script>
+  import VenueService from "../../services/VenueService"
   export default {
     data() {
       return {
         form: {
           name: '',
-          subHeading: "",
+          sub: "",
           description: ""
         },
-        foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
         show: true
       }
     },
     methods: {
-      onSubmit(event) {
-        event.preventDefault()
-        alert(JSON.stringify(this.form))
+      onSubmit() {
+        const data = this.form;
+        console.log(data)
+        VenueService.setVenue(data)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error.response)
+        }) 
       },
       onReset(event) {
         event.preventDefault()
         // Reset our form values
-        this.form.email = ''
         this.form.name = ''
-        this.form.food = null
-        this.form.checked = []
+        this.form.subHeading = ''
+        this.form.description = ""
         // Trick to reset/clear native browser form validation state
         this.show = false
         this.$nextTick(() => {

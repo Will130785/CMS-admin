@@ -1,12 +1,17 @@
 <template>
-    <div class="venues">
+    <div class="venue">
         <div>
         <b-jumbotron>
         <template #header>Venues</template>
 
         <template #lead>
-            This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-            featured content or information.
+            <div class="venue-container">
+                <div v-for="(venue, index) in venues" :key="index" class="venue-entry">
+                    <p>{{venue.name}}</p>
+                    <p>{{venue.subHeading}}</p>
+                    <button v-on:click="onDelete($event, venue._id)" type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
         </template>
 
         <hr class="my-4">
@@ -30,19 +35,56 @@
 </template>
 
 <script>
-    import VenueModal from "../components/modals/VenueModal"
+import VenueModal from "../components/modals/VenueModal"
+import VenueService from "../services/VenueService"
     export default {
+        data(){
+            return {
+                venues: []
+            }
+        },
         components: {
             VenueModal
-        }
-    
+        },
+        created(){
+            VenueService.getVenues()
+            .then(response => {
+                console.log(this.venues)
+                this.venues = response.data
+            })
+            .catch(error => {
+                console.log(`There was an error: ${error.response}`)
+            })
+        },
+        methods: {
+            onDelete(event, id){
+                VenueService.deleteVenue(id)
+                .then(response => {
+                    console.log(id, response)
+                })
+                .catch(error => {
+                    console.log(error.response)
+                })
+            }
+        }    
     }
 </script>
 
 <style scoped lang="scss">
-    .venues {
+    .venue {
         width: 100%;
         height: 50rem;
         background-color: #fff;
+    }
+
+    .venue-container {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .venue-entry {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
     }
 </style>

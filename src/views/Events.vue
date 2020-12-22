@@ -5,8 +5,14 @@
         <template #header>Events</template>
 
         <template #lead>
-            This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-            featured content or information.
+            <div class="events-container">
+                <div v-for="(event, index) in events" :key="index" class="event-entry">
+                    <p>{{event.name}}</p>
+                    <p>{{event.date}}</p>
+                    <p>{{event.time}}</p>
+                    <button v-on:click="onDelete($event, event._id)" type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
         </template>
 
         <hr class="my-4">
@@ -31,9 +37,36 @@
 
 <script>
     import EventModal from "../components/modals/EventModal"
+    import EventService from "../services/EventService"
     export default {
+        data(){
+            return {
+                events: []
+            }
+        },
         components: {
             EventModal
+        },
+        created(){
+            EventService.getEvents()
+            .then(response => {
+                console.log(this.events)
+                this.events = response.data
+            })
+            .catch(error => {
+                console.log(`There was an error: ${error.response}`)
+            })
+        },
+        methods: {
+            onDelete(event, id){
+                EventService.deleteEvent(id)
+                .then(response => {
+                    console.log(id, response)
+                })
+                .catch(error => {
+                    console.log(error.response)
+                })
+            }
         }
     }
 </script>
@@ -43,5 +76,16 @@
         width: 100%;
         height: 50rem;
         background-color: #fff;
+    }
+
+    .events-container {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .event-entry {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
     }
 </style>
