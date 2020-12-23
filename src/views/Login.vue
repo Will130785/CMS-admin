@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <b-form class="login-form" @submit="onSubmit" @reset="onReset" v-if="show">
+    <b-form class="login-form" @submit="loginUser" @reset="onReset" v-if="show">
       <b-form-group
         id="username"
         label="Username:"
@@ -32,6 +32,9 @@
 </template>
 
 <script>
+  // import router from "../router"
+  // import AuthenticationService from "../services/AuthenticationService"
+  import { mapActions } from "vuex"
   export default {
     data() {
       return {
@@ -43,9 +46,33 @@
       }
     },
     methods: {
-      onSubmit(event) {
+      // loginUser(event) {
+      //   event.preventDefault()
+      //   const data = this.form
+      //   AuthenticationService.login(data)
+      //   .then(response => {
+      //     console.log(response.data)
+      //     router.push("/events")
+      //   })
+      //   .catch(error => {
+      //     console.log(error.response)
+      //     router.push("/profile")
+      //   })
+        
+      // },
+      ...mapActions(["login"]),
+      loginUser(event){
         event.preventDefault()
-        alert(JSON.stringify(this.form))
+          let user = this.form
+          this.login(user)
+          .then(res => {
+            if(res.data.success){
+              this.$router.push("/profile");
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
       },
       onReset(event) {
         event.preventDefault()

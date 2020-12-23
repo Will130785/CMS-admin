@@ -2,13 +2,17 @@
     <nav class="top-bar">
         <img class="top-bar-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW6X2lldt_gy2tcbXCKBbKWNVBpH-f1Mcjsw&usqp=CAU">
         <router-link :to="{ name: 'Profile' }">Profile</router-link>
-        <router-link :to="{ name: 'Login' }">Logout</router-link>
+        <router-link v-if="!isLoggedIn" :to="{ name: 'Login' }">Login</router-link>
+        <router-link v-if="isLoggedIn" :to="{ name: 'Login' }">Logout</router-link>
     </nav>
 </template>
 
 <script>
+    import { mapGetters } from "vuex"
     export default {
-    
+        computed: {
+            ...mapGetters(["isLoggedIn"])
+        }
     }
 </script>
 

@@ -4,6 +4,19 @@ import router from "./router";
 import store from "./store";
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import axios from "axios"
+
+
+// Install BootstrapVue
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
+Vue.use(Vuetify)
 
 const requireComponent = require.context(
   // The relative path of the components folder
@@ -41,6 +54,15 @@ requireComponent.keys().forEach(fileName => {
 })
 
 Vue.config.productionTip = false;
+
+//Load the token from local storage
+Vue.prototype.$http = axios;
+const token = localStorage.getItem("token")
+
+//Is there any token then we will append default axios authorisation headers
+if(token){
+  Vue.prototype.$http.default.headers.common["Authorization"] = token;
+}
 
 new Vue({
   router,
