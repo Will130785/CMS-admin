@@ -1,12 +1,12 @@
 <template>
-    <div class="menu">
+    <div class="entries">
         <div>
         <b-jumbotron>
         <template #header>Menus</template>
 
         <template #lead>
-            <div class="menu-container">
-                <div v-for="(menu, index) in menus" :key="index" class="menu-entry">
+            <div class="entry-container">
+                <div v-for="(menu, index) in menus" :key="index" class="entry">
                     <p>{{menu.name}}</p>
                     <p>{{menu.menu}}</p>
                     <button v-on:click="onDelete($event, menu._id)" type="button" class="btn btn-danger">Delete</button>
@@ -16,16 +16,11 @@
 
         <hr class="my-4">
 
-        <p>
-            It uses utility classes for typography and spacing to space content out within the larger
-            container.
-        </p>
-
         <div>
   <b-button v-b-modal.modal-1>Add Menu</b-button>
 
   <b-modal id="modal-1" title="BootstrapVue">
-    <p class="my-4">Hello from modal!</p>
+    <p class="my-4">Add a new menu</p>
     <MenuModal />
   </b-modal>
 </div>
@@ -71,20 +66,5 @@ import MenuService from "../services/MenuService"
 </script>
 
 <style scoped lang="scss">
-    .menu {
-        width: 100%;
-        height: 50rem;
-        background-color: #fff;
-    }
 
-    .menu-container {
-        display: grid;
-        grid-template-columns: 1fr;
-    }
-
-    .menu-entry {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
 </style>

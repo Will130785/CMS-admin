@@ -1,6 +1,9 @@
 <template>
   <div class="login">
     <b-form class="login-form" @submit="loginUser" @reset="onReset" v-if="show">
+      <div class="form-image">
+        <img src="https://webimages.trailfinders.com/image/upload/tfcc/logo-tfsc.svg">
+      </div>
       <b-form-group
         id="username"
         label="Username:"
@@ -25,8 +28,8 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button type="submit" variant="primary">Login</b-button>
-      <b-button type="reset" variant="danger">Clear</b-button>
+      <b-button size="lg" type="submit" variant="warning">Login</b-button>
+      <b-button size="lg" type="reset" variant="danger">Clear</b-button>
     </b-form>
   </div>
 </template>
@@ -63,6 +66,7 @@
       ...mapActions(["login"]),
       loginUser(event){
         event.preventDefault()
+        console.log("log in")
           let user = this.form
           this.login(user)
           .then(res => {
@@ -97,7 +101,10 @@
     }
 
     .login-form {
-        width: 25%;
+      width: 25%;
+      background-color: #fff;
+      padding: 2rem;
+      box-shadow: .5rem .2rem .2rem .2rem rgba(249, 177, 34, 1);
     }
     
 </style>

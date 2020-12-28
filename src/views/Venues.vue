@@ -1,12 +1,12 @@
 <template>
-    <div class="venue">
+    <div class="entries">
         <div>
         <b-jumbotron>
         <template #header>Venues</template>
 
         <template #lead>
-            <div class="venue-container">
-                <div v-for="(venue, index) in venues" :key="index" class="venue-entry">
+            <div class="entry-container">
+                <div v-for="(venue, index) in venues" :key="index" class="entry">
                     <p>{{venue.name}}</p>
                     <p>{{venue.subHeading}}</p>
                     <button v-on:click="onDelete($event, venue._id)" type="button" class="btn btn-danger">Delete</button>
@@ -16,16 +16,11 @@
 
         <hr class="my-4">
 
-        <p>
-            It uses utility classes for typography and spacing to space content out within the larger
-            container.
-        </p>
-
         <div>
   <b-button v-b-modal.modal-1>Add Venue</b-button>
 
   <b-modal id="modal-1" title="BootstrapVue">
-    <p class="my-4">Hello from modal!</p>
+    <p class="my-4">Add a new venue</p>
     <VenueModal />
   </b-modal>
 </div>
@@ -71,20 +66,6 @@ import VenueService from "../services/VenueService"
 </script>
 
 <style scoped lang="scss">
-    .venue {
-        width: 100%;
-        height: 50rem;
-        background-color: #fff;
-    }
+    
 
-    .venue-container {
-        display: grid;
-        grid-template-columns: 1fr;
-    }
-
-    .venue-entry {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
 </style>

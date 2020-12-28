@@ -43,4 +43,29 @@ export default {
     .main {
       display: flex;
     }
+
+    .entries {
+        width: 70%;
+        height: 50rem;
+        background-color: #fff;
+        position: relative;
+        margin: 0 auto;
+        transform: translateX(15%);
+    }
+
+    .entry-container {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .entry {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin: 1rem 0;
+        box-shadow: 0 .1rem .5rem .1rem rgba(0, 0, 0, .5);
+        padding: 1rem;
+        border-radius: .5rem;
+    }
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <nav class="side-bar">
+    <nav class="side-bar" v-if="isLoggedIn">
         <div class=side-bar-header>
             <h1>Trailfinders SC</h1>
         </div>
@@ -17,13 +17,18 @@
 </template>
 
 <script>
+    import { mapGetters } from "vuex"
     export default {
-    
+        computed: {
+            ...mapGetters(["isLoggedIn"])
+        }
     }
 </script>
 
 <style scoped lang="scss">
     .side-bar {
+        position: fixed;
+        z-index: 10;
         width: 20%;
         background-color: #2dce89;
         display: flex;

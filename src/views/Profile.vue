@@ -1,12 +1,12 @@
 <template>
-    <div class="profile">
+    <div class="entries">
         <div>
         <b-jumbotron>
         <template #header>Profiles</template>
 
         <template #lead>
-            <div class="profile-container">
-                <div v-for="(profile, index) in profiles" :key="index" class="profile-entry">
+            <div class="entry-container">
+                <div v-for="(profile, index) in profiles" :key="index" class="entry">
                     <p>{{profile.name}}</p>
                     <p>{{profile.photo}}</p>
                     <button v-on:click="onDelete($event, profile._id)" type="button" class="btn btn-danger">Delete</button>
@@ -16,16 +16,12 @@
 
         <hr class="my-4">
 
-        <p>
-            It uses utility classes for typography and spacing to space content out within the larger
-            container.
-        </p>
 
         <div>
   <b-button v-b-modal.modal-1>Add Profile</b-button>
 
   <b-modal id="modal-1" title="BootstrapVue">
-    <p class="my-4">Hello from modal!</p>
+    <p class="my-4">Add a new profile</p>
     <ProfileModal />
   </b-modal>
 </div>
@@ -71,20 +67,7 @@ import ProfileService from "../services/ProfileService"
 </script>
 
 <style scoped lang="scss">
-    .profile {
-        width: 100%;
-        height: 50rem;
-        background-color: #fff;
-    }
+    
 
-    .profile-container {
-        display: grid;
-        grid-template-columns: 1fr;
-    }
 
-    .profile-entry {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
 </style>

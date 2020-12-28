@@ -1,12 +1,12 @@
 <template>
-    <div class="vacancy">
+    <div class="entries">
         <div>
         <b-jumbotron>
         <template #header>Job Vacancies</template>
 
         <template #lead>
-            <div class="vacancy-container">
-                <div v-for="(vacancy, index) in vacancies" :key="index" class="vacancy-entry">
+            <div class="entry-container">
+                <div v-for="(vacancy, index) in vacancies" :key="index" class="entry">
                     <p>{{vacancy.title}}</p>
                     <p>{{vacancy.contact}}</p>
                     <button v-on:click="onDelete($event, vacancy._id)" type="button" class="btn btn-danger">Delete</button>
@@ -16,16 +16,11 @@
 
         <hr class="my-4">
 
-        <p>
-            It uses utility classes for typography and spacing to space content out within the larger
-            container.
-        </p>
-
         <div>
-  <b-button v-b-modal.modal-1>Add Profile</b-button>
+  <b-button v-b-modal.modal-1>Add Vacancy</b-button>
 
   <b-modal id="modal-1" title="BootstrapVue">
-    <p class="my-4">Hello from modal!</p>
+    <p class="my-4">Add a new job vacancy</p>
     <VacancyModal />
   </b-modal>
 </div>
@@ -71,20 +66,6 @@ import VacancyService from "../services/VacancyService"
 </script>
 
 <style scoped lang="scss">
-    .vacancy {
-        width: 100%;
-        height: 50rem;
-        background-color: #fff;
-    }
+    
 
-    .vacancy-container {
-        display: grid;
-        grid-template-columns: 1fr;
-    }
-
-    .vacancy-entry {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
 </style>

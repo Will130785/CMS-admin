@@ -1,12 +1,12 @@
 <template>
-    <div class="gallery">
+    <div class="entries">
         <div>
         <b-jumbotron>
         <template #header>Gallery</template>
 
         <template #lead>
-            <div class="gallery-container">
-                <div v-for="(photo, index) in photos" :key="index" class="gallery-entry">
+            <div class="entry-container">
+                <div v-for="(photo, index) in photos" :key="index" class="entry">
                     <p>{{photo.image}}</p>
                     <p>{{photo.description}}</p>
                     <button v-on:click="onDelete($event, photo._id)" type="button" class="btn btn-danger">Delete</button>
@@ -16,16 +16,11 @@
 
         <hr class="my-4">
 
-        <p>
-            It uses utility classes for typography and spacing to space content out within the larger
-            container.
-        </p>
-
         <div>
   <b-button v-b-modal.modal-1>Add Photo</b-button>
 
   <b-modal id="modal-1" title="BootstrapVue">
-    <p class="my-4">Hello from modal!</p>
+    <p class="my-4">Add a new photo</p>
     <GalleryModal />
   </b-modal>
 </div>
@@ -71,20 +66,6 @@ import GalleryService from "../services/GalleryService"
 </script>
 
 <style scoped lang="scss">
-    .gallery {
-        width: 100%;
-        height: 50rem;
-        background-color: #fff;
-    }
+    
 
-    .gallery-container {
-        display: grid;
-        grid-template-columns: 1fr;
-    }
-
-    .gallery-entry {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
 </style>
